@@ -1,0 +1,51 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#app {
+  width: 45rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+form.controls {
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  width: 10rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-input {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+.form-input:not(:last-child) {
+  margin-bottom: 1rem;
+}

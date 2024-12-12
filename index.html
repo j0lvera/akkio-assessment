@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body>
+    <main id="app">
+      <form class="controls">
+        <div class="form-group">
+          <label>
+            Saturation
+            <input
+              class="form-input"
+              min="0"
+              max="359"
+              type="number"
+              id="saturation-number"
+            />
+            <input
+              class="form-input"
+              min="0"
+              max="359"
+              type="range"
+              id="saturation-range"
+            />
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>
+            Lightness
+            <input class="form-input" type="number" id="lightness-number" />
+            <input class="form-input" type="range" id="lightness-range" />
+          </label>
+        </div>
+      </form>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
