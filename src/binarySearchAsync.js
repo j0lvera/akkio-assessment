@@ -1,4 +1,7 @@
-import { getColor } from "./colors.js";
+// Binary Search Async
+//
+
+import { getColor } from "./color.js";
 
 /**
  * @typedef {Function} SearchBinaryCallback
@@ -7,27 +10,43 @@ import { getColor } from "./colors.js";
  */
 
 /**
- * Abstract binary search function
+ * @typedef {Object} Color
+ * @property {string} name
+ * @property {string} hex
+ */
+
+/**
+ * Binary search function
+ *
+ * A small algorithm that uses binary search to find the closest color name to
+ * a given color. I tried to make the function as pure as possible, it could be
+ * further optimized by taking a general async function as a parameter. This
+ * improvement would remove dependencies and make the function more reusable and
+ * easy to test.
+ *
  * @async
  * @function binarySearch
  * @param {number} saturation
  * @param {number} lightness
- // * @param {SearchBinaryCallback} callback
+ * @returns {Promise<Color[]>}
  */
 async function binarySearchAsync(saturation, lightness) {
   /**
    * @param h
-   * @returns {Promise<string>}
+   * @returns {Promise<Color>}
    */
   async function getColorName(h) {
     const res = await getColor(h, saturation, lightness);
-    return res.name.value;
+
+    return {
+      name: res.name.value,
+      hex: res.name.closest_named_hex,
+    };
   }
 
   let breakpoints = [];
   let activeHue = 0;
 
-  // debugger;
   async function findBreakpoint(start, end, colorName) {
     let left = start;
     let right = end;
@@ -37,7 +56,7 @@ async function binarySearchAsync(saturation, lightness) {
       const mid = Math.floor((left + right) / 2);
       const midColorName = await getColorName(mid);
 
-      if (midColorName !== colorName) {
+      if (midColorName.name !== colorName) {
         breakpoint = mid;
         right = mid - 1;
       } else {
@@ -51,7 +70,7 @@ async function binarySearchAsync(saturation, lightness) {
   let startColor = await getColorName(activeHue);
 
   while (activeHue <= 360) {
-    const breakpoint = await findBreakpoint(activeHue, 360, startColor);
+    const breakpoint = await findBreakpoint(activeHue, 360, startColor.name);
 
     if (breakpoint === null) {
       break;
@@ -59,7 +78,7 @@ async function binarySearchAsync(saturation, lightness) {
 
     activeHue = breakpoint;
     startColor = await getColorName(activeHue);
-    breakpoints.push({ hue: activeHue, name: startColor });
+    breakpoints.push(startColor);
   }
 
   return breakpoints;
